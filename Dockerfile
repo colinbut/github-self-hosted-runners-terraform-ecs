@@ -5,9 +5,11 @@ ARG GITHUB_REPO_PAT_TOKEN
 ARG RUNNER_NAME
 ARG LABELS
 
-RUN yum update -y && yum install tar gzip -y 
-WORKDIR /opt/runner/
+RUN yum update -y && yum install tar gzip shadow-utils libicu -y 
+RUN useradd runner_user
+USER runner_user
 
+WORKDIR /opt/runner/
 
 RUN curl -o actions-runner-linux-x64-2.278.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.278.0/actions-runner-linux-x64-2.278.0.tar.gz
 RUN tar xzf actions-runner-linux-x64-2.278.0.tar.gz
