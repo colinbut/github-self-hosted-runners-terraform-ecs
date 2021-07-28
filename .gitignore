@@ -1,2 +1,2 @@
 local.sh
-build.args
+.env.list
