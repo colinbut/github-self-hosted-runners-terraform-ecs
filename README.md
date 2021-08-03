@@ -2,14 +2,14 @@
 
 ## Bootstrap
 
-### ECR Repository
+### 1. ECR Repository
 Create the ECR repository for storing the GitHub Runner Docker Image
 
 ```bash
 aws ecr create-repository --repository-name github-runner
 ```
 
-### Build & Push GitHub Runner Docker Image
+### 2. Build & Push GitHub Runner Docker Image
 
 #### Setup direnv
 
@@ -27,3 +27,13 @@ Currently, the only environment variable setup is `AWS_ACCOUNT_ID` which denotes
 make build
 make push
 ```
+
+### 3. Add GitHub PAT Token Secret to AWS SSM Parameter Store
+
+e.g. 
+
+```bash
+aws ssm put-parameter --name github_runner_pat_token --type SecureString --value [Your GitHub Pat Token]
+```
+
+The SSM Parameter above would be injected into the ECS Task Definition as defined as Environment Variables for the Docker Image.
