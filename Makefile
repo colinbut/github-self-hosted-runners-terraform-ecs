@@ -12,3 +12,15 @@ run:
 push:
 	cd runner_image && \
 		docker push $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-1.amazonaws.com/github-runner
+
+init:
+	cd terraform && \
+		terraform init
+
+plan:
+	cd terraform && \
+		terraform plan
+
+apply:
+	cd terraform && \
+		terraform apply -auto-approve
