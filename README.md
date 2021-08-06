@@ -1,4 +1,6 @@
-# github-self-hosted-runners-terraform-ecs
+# Github Self Hosted Runners Terraform ECS
+
+This project showcase capturing running GitHub Self Hosted Runners in ECS in code using Terraform.
 
 ## Bootstrap
 
