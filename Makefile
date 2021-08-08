@@ -23,4 +23,8 @@ plan:
 
 apply:
 	cd terraform && \
-		terraform apply -auto-approve
+		terraform apply
+
+destroy:
+	cd terraform && \
+		terraform destroy
