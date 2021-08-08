@@ -3,3 +3,4 @@ local.sh
 .envrc
 */.terraform/*
 */.terraform.*
+terraform*
