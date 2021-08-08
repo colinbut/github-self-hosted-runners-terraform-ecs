@@ -7,7 +7,7 @@ resource "aws_ecs_cluster" "github_runner_ecs_cluster" {
 resource "aws_ecs_task_definition" "github_runner_ecs_task_def" {
   family                   = "github_runner"
   cpu                      = "1"
-  memory                   = "0.5"
+  memory                   = "1024"
   requires_compatibilities = ["FARGATE"]
 
   execution_role_arn = aws_iam_role.ecs_task_def_execution_role.arn
