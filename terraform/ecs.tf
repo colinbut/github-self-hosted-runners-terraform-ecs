@@ -38,7 +38,7 @@ resource "aws_iam_role" "ecs_task_def_execution_role" {
         Effect = "Allow"
         Sid    = "ECSAssumeRole"
         Principal = {
-          Service = "ecs.amazonaws.com"
+          Service = "ecs-tasks.amazonaws.com"
         }
       },
     ]
