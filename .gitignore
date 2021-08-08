@@ -1,3 +1,5 @@
 local.sh
 .env.list
 .envrc
+*/.terraform/*
+*/.terraform.*
