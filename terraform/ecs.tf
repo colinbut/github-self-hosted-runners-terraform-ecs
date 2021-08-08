@@ -6,7 +6,7 @@ resource "aws_ecs_cluster" "github_runner_ecs_cluster" {
 
 resource "aws_ecs_task_definition" "github_runner_ecs_task_def" {
   family                   = "github_runner"
-  cpu                      = "1"
+  cpu                      = "256"
   memory                   = "1024"
   requires_compatibilities = ["FARGATE"]
 
