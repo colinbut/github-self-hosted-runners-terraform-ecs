@@ -5,7 +5,7 @@ resource "aws_ecs_cluster" "github_runner_ecs_cluster" {
 }
 
 resource "aws_ecs_task_definition" "github_runner_ecs_task_def" {
-  family                   = "github_runner"
+  family                   = "github-runner-task"
   cpu                      = "256"
   memory                   = "1024"
   requires_compatibilities = ["FARGATE"]
@@ -19,16 +19,39 @@ resource "aws_ecs_task_definition" "github_runner_ecs_task_def" {
       image = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/github-runner"
       environment = [
         {
-          github_runner_pat_token = var.github_runner_pat_token
+          name  = "GITHUB_REPO_URL"
+          value = var.github_repo_url
+        },
+        {
+          name  = "LABELS"
+          value = join(",", var.labels)
+        },
+        {
+          name  = "RUNNER_NAME"
+          value = var.runner_name
         }
       ]
+      secrets = [
+        {
+          name      = "github_runner_pat_token"
+          valueFrom = "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/github_runner_pat_token"
+        }
+      ]
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group         = "/ecs/${var.runner_name}-ecs-task"
+          awslogs-region        = "${data.aws_region.current.name}"
+          awslogs-stream-prefix = "ecs"
+        }
+      }
     }
   ])
 }
 
 resource "aws_iam_role" "ecs_task_def_execution_role" {
   name        = "github_runner_ecs_task_def_execution_role"
-  description = ""
+  description = "The GitHub Runner ECS Task Defintion Execution Role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -36,7 +59,7 @@ resource "aws_iam_role" "ecs_task_def_execution_role" {
       {
         Action = "sts:AssumeRole"
         Effect = "Allow"
-        Sid    = "ECSAssumeRole"
+        Sid    = ""
         Principal = {
           Service = "ecs-tasks.amazonaws.com"
         }
@@ -45,19 +68,19 @@ resource "aws_iam_role" "ecs_task_def_execution_role" {
   })
 
   inline_policy {
-    name = ""
+    name = "EnableFetchSecretParamsFromSSM"
     policy = jsonencode({
       Version = "2012-10-17"
       Statement = [
         {
           Action   = "ssm:GetParameter*"
           Effect   = "Allow"
-          Sid      = "Get_SSM_Params"
+          Sid      = ""
           Resource = "*"
         }
       ]
     })
   }
 
-  managed_policy_arns = [ "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy" ]
+  managed_policy_arns = ["arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"]
 }

@@ -3,4 +3,5 @@ local.sh
 .envrc
 */.terraform/*
 */.terraform.*
-terraform*
+terraform.tfstate*
+local.auto.tfvars
