@@ -33,7 +33,7 @@ resource "aws_ecs_task_definition" "github_runner_ecs_task_def" {
       ]
       secrets = [
         {
-          name      = "github_runner_pat_token"
+          name      = "GITHUB_REPO_PAT_TOKEN"
           valueFrom = "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/github_runner_pat_token"
         }
       ]
