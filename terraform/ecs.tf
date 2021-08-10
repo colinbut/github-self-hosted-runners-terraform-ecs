@@ -39,7 +39,7 @@ resource "aws_ecs_task_definition" "github_runner_ecs_task_def" {
       ]
       logConfiguration = {
         logDriver = "awslogs"
-        options = { 
+        options = {
           awslogs-group         = aws_cloudwatch_log_group.ecs_task_def_log_group.name
           awslogs-region        = "${data.aws_region.current.name}"
           awslogs-stream-prefix = "ecs"
@@ -88,4 +88,11 @@ resource "aws_iam_role" "ecs_task_def_execution_role" {
   }
 
   managed_policy_arns = ["arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"]
+}
+
+resource "aws_ecs_service" "github_runner_service" {
+  name            = "github-runner-service"
+  cluster         = aws_ecs_cluster.github_runner_ecs_cluster.id
+  task_definition = aws_ecs_task_definition.github_runner_ecs_task_def.arn
+  desired_count   = 3
 }
