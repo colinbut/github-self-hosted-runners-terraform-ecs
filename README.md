@@ -42,6 +42,10 @@ The SSM Parameter above would be injected into the ECS Task Definition as define
 
 ### 4. Run ECS Task
 
+from `awscli` run:
+
 ```bash
-aws ecs --region eu-west-1 run-task --count 1 --cluster github_runner --task-definition github-runner-task:3 --network-configuration "awsvpcConfiguration={subnets=['subnet-85da92cd','subnet-2d255d4b','subnet-e14ef4bb'],securityGroups=['sg-2274d256'],assignPublicIp='DISABLED'}" --launch-type FARGATE
+aws ecs --region eu-west-1 run-task --count 1 --cluster github_runner --task-definition github-runner-task:3 --network-configuration "awsvpcConfiguration={subnets=['subnet-85da92cd','subnet-2d255d4b','subnet-e14ef4bb'],securityGroups=['sg-2274d256'],assignPublicIp='ENABLED'}" --launch-type FARGATE
 ```
+
+replace subnet ids with your subnet ids for your VPC since need to run the ECS Docker Container within a VPC.
