@@ -40,7 +40,19 @@ aws ssm put-parameter --name github_runner_pat_token --type SecureString --value
 
 The SSM Parameter above would be injected into the ECS Task Definition as defined as Environment Variables for the Docker Image.
 
-### 4. Run ECS Task
+### 4. Deploy Infrastructure
+
+The next step need to deploy the ECS Cluster along with the ECS Service & ECS Task Definition plus all other required AWS resources that goes along with it.
+
+```bash
+make init
+make plan
+make apply
+```
+
+### 5. Run ECS Task
+
+After deploying the Infrastructure you can run the ECS task directly by:
 
 from `awscli` run:
 
