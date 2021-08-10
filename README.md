@@ -39,3 +39,9 @@ aws ssm put-parameter --name github_runner_pat_token --type SecureString --value
 ```
 
 The SSM Parameter above would be injected into the ECS Task Definition as defined as Environment Variables for the Docker Image.
+
+### 4. Run ECS Task
+
+```bash
+aws ecs --region eu-west-1 run-task --count 1 --cluster github_runner --task-definition github-runner-task:3 --network-configuration "awsvpcConfiguration={subnets=['subnet-85da92cd','subnet-2d255d4b','subnet-e14ef4bb'],securityGroups=['sg-2274d256'],assignPublicIp='DISABLED'}" --launch-type FARGATE
+```

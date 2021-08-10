@@ -39,14 +39,19 @@ resource "aws_ecs_task_definition" "github_runner_ecs_task_def" {
       ]
       logConfiguration = {
         logDriver = "awslogs"
-        options = {
-          awslogs-group         = "/ecs/${var.runner_name}-ecs-task"
+        options = { 
+          awslogs-group         = aws_cloudwatch_log_group.ecs_task_def_log_group.name
           awslogs-region        = "${data.aws_region.current.name}"
           awslogs-stream-prefix = "ecs"
         }
       }
     }
   ])
+}
+
+resource "aws_cloudwatch_log_group" "ecs_task_def_log_group" {
+  name              = "/ecs/${var.runner_name}-ecs-task"
+  retention_in_days = 90
 }
 
 resource "aws_iam_role" "ecs_task_def_execution_role" {
