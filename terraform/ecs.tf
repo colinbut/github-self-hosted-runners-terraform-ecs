@@ -94,5 +94,11 @@ resource "aws_ecs_service" "github_runner_service" {
   name            = "github-runner-service"
   cluster         = aws_ecs_cluster.github_runner_ecs_cluster.id
   task_definition = aws_ecs_task_definition.github_runner_ecs_task_def.arn
-  desired_count   = 3
+  desired_count   = 1
+  launch_type     = "FARGATE"
+
+  network_configuration {
+    subnets             = var.subnets
+    assign_public_ip    = "true"
+  }
 }

@@ -12,3 +12,8 @@ variable "labels" {
   description = "A list of additional labels to attach to the runner instance"
   type        = list(string)
 }
+
+variable "subnets" {
+  description = "The subnets of the VPC to place the GitHub Runners in"
+  type        = list(string)
+}
