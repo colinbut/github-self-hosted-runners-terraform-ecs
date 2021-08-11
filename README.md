@@ -1,6 +1,6 @@
 # Github Self Hosted Runners Terraform ECS
 
-This project showcase capturing running GitHub Self Hosted Runners in ECS in code using Terraform.
+This project showcase capturing running GitHub Self Hosted Runners in ECS (Fargate Mode) in code using Terraform.
 
 ## Bootstrap
 
@@ -61,3 +61,7 @@ aws ecs --region eu-west-1 run-task --count 1 --cluster github_runner --task-def
 ```
 
 replace subnet ids with your subnet ids for your VPC since need to run the ECS Docker Container within a VPC.
+
+## Authors
+
+Colin But
