@@ -5,3 +5,4 @@ local.sh
 */.terraform.*
 terraform.tfstate*
 local.auto.tfvars
+.vscode
