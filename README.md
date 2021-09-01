@@ -4,6 +4,10 @@ This project showcase capturing running GitHub Self Hosted Runners in ECS (Farga
 
 This project contains a dependency of another GitHub project of mine: [github-self-hosted-runner-docker-image](https://github.com/colinbut/github-self-hosted-runner-docker-image) which represents the Docker image of the GitHub Runner.
 
+## Solution Architecture
+
+![GitHubSelfHostedRunnersEC2](docs/GitHubSelfHostedRunnersSolutionArchitecture.png)
+
 ## Bootstrap
 
 ### 1. Add GitHub PAT Token Secret to AWS SSM Parameter Store
